@@ -10,15 +10,6 @@ A lexical analyzer system for simple arithmetic expressions.
 
 
 
-Operator/keyword: +, -, * /, (, )
-
-Identifer: (a+b+...+z+A+B+...Z)(a+b+...+z+A+B+...Z+0+1+2+...+9)*
-
-Integer: (0+1+2+...+9)(0+1+2+...+9)*
-
-
-
-
 ///////rules that must be followed //////////////
 
 <ifstmt> -> if (<boolexpr>) '{'<assign>'}' [else '{'<assign>'}']
@@ -223,6 +214,9 @@ int lookup(char ch) {
 		break;
 
 		/******* WRONG HERE because && has 2 characters *****
+
+		This is wrong and needs to be taken out 
+
 
 		case '&&':
 
