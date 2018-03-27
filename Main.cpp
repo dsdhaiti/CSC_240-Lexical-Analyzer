@@ -331,7 +331,7 @@ int lex() {
 			getChar();
 
 		}
-	
+		cout << lexeme[2] << endl; 
 		if (lexeme[0] == 'i' && lexeme[1] == 'f' )
 		{
 			
@@ -340,6 +340,9 @@ int lex() {
 			
 			// runs the iff statement function 
 			ifstmt();
+
+
+
 		}
 
 		
@@ -682,7 +685,13 @@ void boolTerm()
 
 */
 
-void boolExpr(){}
+void boolExpr()
+
+{
+
+
+
+}
 
 
 
@@ -711,31 +720,7 @@ void boolFactor() {}
 
 void ifstmt() 
 {
-	 
-	if (nextToken == IF_STMT)
-	{
-		lex();
-		if (nextToken == LEFT_PAREN)
-		{
-			boolExpr();
-			lex(); 
+	cout << "im at the if statment: STARTED " << endl; 
+	//if(nextToken == ifstmt)
 
-			if (nextToken == RIGHT_PAREN)
-			{
-				lex();
-
-			}
-			else
-			{
-				cout << "**** Error: There is no RIGHT parenethese" << endl; 
-			}
-			
-		}
-		else
-		{
-			cout << "**** ERROR: There is no LEFT parenethese " << endl; 
-		}
-	}
-
-	//assign();
 }
