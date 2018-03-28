@@ -14,10 +14,10 @@ A lexical analyzer system for simple arithmetic expressions.
 
 <ifstmt> -> if (<boolexpr>) '{'<assign>'}' [else '{'<assign>'}']
 <boolexpr> -> <boolterm> {|| <boolterm>}
-<boolterm> -> <boolfactor> {&& <boolfactor>}
+<boolterm> -> <boolfactor> { && <boolfactor> }
 <boolfactor> -> TRUE | FALSE | ! <boolfactor> | (<boolexpr>)
 <assign> -> id = <expr>; | id = <expr>; <assign>
-<expr> -> <term> {( +|- ) <term>}
+<expr> -> <term> { ( + | - ) <term>}
 <term> -> <factor> {( *|/|% ) <factor>}
 <factor>-> id | int_constant | (<expr>)
 
@@ -76,6 +76,11 @@ void ifstmt();
 /* Token codes */
 #define INT_LIT 10
 #define IDENT 11
+#define IF_STMT  31
+#define ELSE_STMT 32
+#define TRUE 32
+#define FALSE 33
+
 #define ADD_OP 21
 #define SUB_OP 22
 #define MULT_OP 23
@@ -83,10 +88,12 @@ void ifstmt();
 #define MOD_OP 27
 #define ASSIGN_OP 28
 #define AND_OP 30
+
+
 #define SEMICOLON 29
 #define LEFT_PAREN 25
 #define RIGHT_PAREN 26
-#define IF_STMT  31
+
 
 
 
@@ -331,7 +338,7 @@ int lex() {
 			getChar();
 
 		}
-		cout << lexeme[2] << endl; 
+
 		if (lexeme[0] == 'i' && lexeme[1] == 'f' )
 		{
 			
@@ -340,12 +347,7 @@ int lex() {
 			
 			// runs the iff statement function 
 			ifstmt();
-
-
-
 		}
-
-		
 
 		nextToken = IDENT;
 		break;
@@ -632,7 +634,7 @@ void factor()
 		cout << "Error #2 " << endl; /* Neither RHS matches */
 
 	}
-
+	TRUE
 }
 
 
@@ -704,8 +706,10 @@ void boolExpr()
 <boolfactor> -> TRUE | FALSE | ! <boolfactor> | (<boolexpr>)
 
 */
+void boolFactor() 
+{
 
-void boolFactor() {}
+}
 
 
 
