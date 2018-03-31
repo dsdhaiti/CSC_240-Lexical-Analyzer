@@ -153,8 +153,8 @@ void main()
 and return the token */
 
 int lookup(char ch) {
-	
-	cout << "the character is : " << lexeme[0] << lexeme[1] << endl;
+	cout << " im in lookup()" << endl; 
+	cout << "the character coming in is  is : " << ch << endl;
 	switch (ch) {
 
 	case '(':
@@ -259,6 +259,10 @@ void addChar() {
 	else
 		cout <<  " Error - lexeme is too long \n";
 
+
+
+
+	
 }
 
 /*****************************************************/
@@ -337,23 +341,18 @@ int lex() {
 			getChar();
 
 		}
-			cout << lexeme[0] << lexeme[1] << lexeme[2] << endl;
+		
 		if (lexeme[0] == 'i' && lexeme[1] == 'f' && lexeme[2] == 0)
 		{
-			cout << lexeme[0] << lexeme[1] << lexeme[2] << "with token: " << nextToken << endl;
 			// defines this postestion it is at to be an if statment 
 			nextToken = IF_STMT;
-			cout << "im here" << endl; 
 			
-			cout <<  "  with a charclass of " <<  charClass << endl;
 			
-			cout << lexeme[0] << lexeme[1] << lexeme[2] << "with token: " << nextToken << endl << endl;
-						// runs the iff statement function 
+			
+			// runs the iff statement function 
 			ifstmt();
-			cout << lexeme[0] << lexeme[1] << lexeme[2] << "with token: " << nextToken << endl;
 
 		}
-		cout << lexeme[0] << lexeme[1] << lexeme[2] << endl;
 		nextToken = IDENT;
 		break;
 
@@ -380,16 +379,8 @@ int lex() {
 		/* Parentheses and operators */
 
 	case UNKNOWN:
-		getChar();
-		// add the character to lexeme
-		// then use lexeme to do the comparasions here
-		// Errors: what type does data does lexeme bring in?
-		addChar();
-			//////// && if statement goes somewhere around here
-		lookup(nextChar);
+			addChar();
 		
-		cout << "the next token under unkown is : " << nextToken << endl;
-
 			if (lexeme[0] == '&' && lexeme[1] == '&'  )
 			{
 				// run the and progrgram
@@ -401,6 +392,11 @@ int lex() {
 			else if( lexeme[0] == '|' && lexeme[1] == '|'&& lexeme[2] == 0)
 			{
 				nextToken == OR_OP;
+			}
+			else
+			{
+
+				lookup(nextChar);
 			}
 			
 			
