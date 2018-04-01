@@ -1,6 +1,6 @@
-﻿/* Filename: parser.cpp
+﻿/* Filename: Lexical_Analyzer .cpp
 CSC 340 - Programming Languages
-Scott J Burkett
+David D'Haiti 
 
 <ifstmt>-> if (<boolexpr>) '{'<assign>'}' [else '{'<assign>'}']
 <boolexpr>-> <boolterm> {|| <boolterm>}
@@ -27,8 +27,8 @@ char nextChar;
 int lexLen;
 int token;
 int nextToken;
+int errCount = 0;
 ifstream in_fp("Syntax.txt");
-
 /* Function declarations */
 void getChar();
 void addChar();
@@ -235,22 +235,33 @@ int lex() {
 		nextToken = INT_LIT;
 		break;
 		/* Parentheses and operators */
+
 	case UNKNOWN:
 		lookup(nextChar);
 		getChar();
+
 		if (nextToken == EOF)
-		{
+		{	addChar();
 			getChar();  // need to read 2 characters for && and ||
-			addChar();
-			if (lexeme[0] == '&' && lexeme[1] == '&' && lexeme[2] == 0) {
-				nextToken == AND_OP;
+			
+			if (lexeme[0] == '&' && lexeme[1] == '&' && lexeme[2] == 0)
+			{
+				nextToken = AND_OP;
+				
 			}
-			else if (lexeme[0] == '|' && lexeme[1] == '|' && lexeme[2] == 0) {
-				nextToken == OR_OP;
+			else if (lexeme[0] == '|' && lexeme[1] == '|' && lexeme[2] == 0)
+			{
+				nextToken = OR_OP;
 			}
 		}
 
 		break;
+
+
+
+
+		break;
+
 		/* EOF */
 	case EOF:
 		nextToken = EOF;
@@ -323,10 +334,13 @@ void factor()
 		else
 			cout << "Error: Right Paren Missing" << endl;
 	} /* End of else if (nextToken == ... */
-	else cout << "Something went wrong" << endl;; /* Neither RHS matches */
+	else
+	{
+		cout << "Something went wrong" << endl; /* Neither RHS matches */
+	}
 }
 
-// <assign> -> id(IDENT) = <expr>; | id = <expr>; <assign>
+// <assign>-> id = <expr>; | id = <expr>; <assign>
 void assign()
 {
 	if (nextToken == IDENT) {
@@ -336,11 +350,23 @@ void assign()
 			expr();
 			if (nextToken == SEMICOLON) {
 				lex();
+				assign();
 			}
 			else {
 				cout << "Error: Missing SEMICOLON" << endl;
 			}
 		}
+
+
+
+
+
+
+
+
+
+
+
 		else {
 			cout << "Error: Assignment Missing" << endl;
 		}
@@ -350,28 +376,44 @@ void assign()
 	}
 	else {
 		cout << "Error: ID Required" << endl;
+		errCount++;
 	}
 }
 
+
+//<boolfactor>->TRUE | FALSE | !<boolfactor> | (<boolexpr>)
 void boolFactor()
 {
-	while (nextToken == TRUE || nextToken == FALSE || nextToken == NOT) {
+
+	if (nextToken == TRUE || nextToken == FALSE ) {
+		lex();
+		
+	}
+	else if (nextToken == NOT)
+	{
 		lex();
 		boolFactor();
 	}
-	if (nextToken == LEFT_PAREN) {
+	else if (nextToken == LEFT_PAREN)
+	{
 		lex();
 		boolExpr();
+		
 		if (nextToken == RIGHT_PAREN) {
 			lex();
 		}
 		else {
 			cout << "Error: Missing RIGHT_PAREN" << endl;
+			errCount++;
 		}
 	}
-	else {
+	else
+	{
 		cout << "Error" << endl;
+		errCount++;
 	}
+	
+	
 }
 
 void boolTerm()
@@ -415,32 +457,46 @@ void ifstmt()
 								if (nextToken == RIGHT_BRACK) {
 									lex();
 								}
-								else {
+								else
+								{
 									cout << "Error: (IF) Expected RIGHT_BRACK" << endl;
+									errCount++;
 								}
 							}
-							else {
+							else
+							{
 								cout << "Error: (IF) Expected LEFT_BRACK" << endl;
+								errCount++;
 							}
 						}
 					}
-					else {
+					else
+					{
 						cout << "Error: (IF) Expected RIGHT_BRACK" << endl;
+						errCount++;
 					}
 				}
-				else {
+				else
+				{
 					cout << "Error: (IF) Expected LEFT_BRACK" << endl;
+					errCount++;
 				}
 			}
-			else {
+			else
+			{
 				cout << "Error: (IF) Expected RIGHT_PAREN" << endl;
+				errCount++;
 			}
 		}
-		else {
+		else 
+		{
 			cout << "Error: (IF) Expected LEFT_PAREN" << endl;
+			errCount++;
 		}
 	}
-	else {
+	else
+	{
 		cout << "Error: (IF) Expected IF_STMNT" << endl;
+		errCount++;
 	}
 }

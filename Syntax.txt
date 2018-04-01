@@ -6,7 +6,7 @@ if (FALSE && (!TRUE))
 }
 else
 {
-    A = (sum + total) * 4;
+    A = (sum + total * 4;
     B=B+1;
     C=B/2;
 }
