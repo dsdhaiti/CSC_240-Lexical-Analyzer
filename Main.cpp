@@ -91,7 +91,11 @@ void main()
 			lex();  // Getting the nextToken
 			ifstmt();
 		} while (nextToken != EOF);
+
 	}
+
+
+	cout << "*************** There are " << errCount << " ERRORS***************************" << endl;
 	in_fp.close();
 
 	system("PAUSE");
@@ -353,32 +357,20 @@ void assign()
 				assign();
 			}
 			else {
-				cout << "Error: Missing SEMICOLON" << endl;
+				cout << "****Error: Missing Semicolon****" << endl;
+				errCount++;
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-		else {
-			cout << "Error: Assignment Missing" << endl;
+		else
+		{
+			cout << " ****Error: Assignment Missing ****" << endl;
+			errCount++;
 		}
 
 	}
-	else if (nextToken == EOF) {
-		system("Pause");
-	}
-	else {
-		cout << "Error: ID Required" << endl;
-		errCount++;
-	}
+	
+
+
 }
 
 
@@ -404,7 +396,7 @@ void boolFactor()
 			lex();
 		}
 		else {
-			cout << "Error: Missing RIGHT_PAREN" << endl;
+			cout << "Error: Missing Right Paranthese" << endl;
 			errCount++;
 		}
 	}
@@ -438,19 +430,25 @@ void boolExpr()
 
 void ifstmt()
 {
-	if (nextToken == IF_TOKEN) {
+	if (nextToken == IF_TOKEN) 
+	{
 		lex();
-		if (nextToken == LEFT_PAREN) {
+		if (nextToken == LEFT_PAREN) 
+		{
 			lex();
 			boolExpr();
-			if (nextToken == RIGHT_PAREN) {
+			if (nextToken == RIGHT_PAREN)
+			{
 				lex();
-				if (nextToken == LEFT_BRACK) {
+				if (nextToken == LEFT_BRACK)
+				{
 					lex();
 					assign();
-					if (nextToken == RIGHT_BRACK) {
+					if (nextToken == RIGHT_BRACK)
+					{
 						lex();
-						if (nextToken == ELSE_TOKEN) {
+						if (nextToken == ELSE_TOKEN)
+						{
 							lex();
 							if (nextToken == LEFT_BRACK) {
 								lex();
