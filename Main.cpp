@@ -370,6 +370,7 @@ void assign()
 		else {
 			cout << "Error: Assignment Missing" << endl;
 		}
+
 	}
 	else if (nextToken == EOF) {
 		system("Pause");
